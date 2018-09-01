@@ -27,20 +27,21 @@
 
 using namespace std;
 
-void initialize();
-void printBoard();
-void getMove();
+void initialize(); //Initial piece positions in a 2D array.
+void printBoard(); 
+void getMove(); //Prompt user for move.
 void isGameOver(std::string);
 int checkWinner(std::string, int);
-bool legalMove(std::string, int, int, int, std::string);
-bool moveCheck(std::string);
-bool anyMoveLeft(std::string, int, int, std::string);
+bool legalMove(std::string, int, int, int, std::string); 
+bool moveCheck(std::string); //Check each piece on board for legal moves left.
+bool anyMoveLeft(std::string, int, int, std::string);  //Check if human or comp
 void makeMove();
+//MinMax
 int mymax(int, int, int);
 int mymin(int, int, int);
-int evaluate();
-int pCount(std::string);
-int highRankCount(std::string); 
+int evaluate(); //Evaluate board position.
+int pCount(std::string); //Piece count.
+int highRankCount(std::string); //High level piece count.
 void textColor(int, int, int);
 bool isAttack(std::string, int, int);
 
@@ -95,7 +96,7 @@ bool legalMove(std::string player, int fromX, int fromY, int toX, int toY, std::
 	//Cant move an empty space
 	if(b[fromY][fromX] == " ") return false;
 	//Cant move onto a occupied space
-    if(b[toY][toX] != " ") return false;
+	if(b[toY][toX] != " ") return false;
 	//Human cannot move comp piece and vice versa
 	if(player == "HUMAN" && b[fromY][fromX].length() == 2) return false;
 	if(player == "COMP" && b[fromY][fromX].length() == 1) return false;	
@@ -153,10 +154,10 @@ bool legalMove(std::string player, int fromX, int fromY, int toX, int toY, std::
 
 		//Handle mini ninja moves
 		if(mode != "TEST" && (abs(fromX-toX) == 1) && (abs(fromY-toY) == 1) && (b[toY-1][toX].length() == 2 ) ){
-		    if(b[toY-1][toX] == "J*") b[toY-1][toX] = "j*";
-            else if(b[toY-1][toX] == "j*") b[toY-1][toX] = " ";
-            else if(b[toY-1][toX] == "S*") b[toY-1][toX] = "s*";
-            else if(b[toY-1][toX] == "s*") b[toY-1][toX] = " ";
+			if(b[toY-1][toX] == "J*") b[toY-1][toX] = "j*";
+			else if(b[toY-1][toX] == "j*") b[toY-1][toX] = " ";
+			else if(b[toY-1][toX] == "S*") b[toY-1][toX] = "s*";
+			else if(b[toY-1][toX] == "s*") b[toY-1][toX] = " ";
 		
 			printf("	HiYa!!\n");
 		}	
@@ -170,10 +171,10 @@ bool legalMove(std::string player, int fromX, int fromY, int toX, int toY, std::
 
 		//Handle mini ninja moves
 		if(mode!="TEST" && (abs(fromX-toX) == 1) && (abs(fromY-toY) == 1) && (b[toY+1][toX].length() == 1 && b[toY+1][toX] != " ") ){
-		    if(b[toY+1][toX] == "J") b[toY+1][toX] = "j";
-            else if(b[toY+1][toX] == "j") b[toY+1][toX] = " ";
-            else if(b[toY+1][toX] == "S") b[toY+1][toX] = "s";
-            else if(b[toY+1][toX] == "s") b[toY+1][toX] = " ";
+			if(b[toY+1][toX] == "J") b[toY+1][toX] = "j";
+			else if(b[toY+1][toX] == "j") b[toY+1][toX] = " ";
+			else if(b[toY+1][toX] == "S") b[toY+1][toX] = "s";
+			else if(b[toY+1][toX] == "s") b[toY+1][toX] = " ";
 		
 			printf("	HiYa!!\n");
 		}	
@@ -191,7 +192,7 @@ bool legalMove(std::string player, int fromX, int fromY, int toX, int toY, std::
 
 		//Check if path block horizontal left and right
 		if((fromX-toX) < 0)
-	    	for(int i=fromX+1; i<=toX; i++) if(b[toY][i] != " ") return false;
+			for(int i=fromX+1; i<=toX; i++) if(b[toY][i] != " ") return false;
 		if((fromX-toX) > 0)
 			for(int i=fromX-1; i>=toX; i--) if(b[toY][i] != " ") return false;
 		//Protect index error
@@ -199,10 +200,10 @@ bool legalMove(std::string player, int fromX, int fromY, int toX, int toY, std::
 		
 		//Handle samurai rules	
 		if(mode != "TEST" &&  b[toY-1][toX].length() == 2) {
-            if(b[toY-1][toX] == "J*") b[toY-1][toX] = "j*";
-            else if(b[toY-1][toX] == "j*") b[toY-1][toX] = " ";
-            else if(b[toY-1][toX] == "S*") b[toY-1][toX] = "s*";
-        	else if(b[toY-1][toX] == "s*") b[toY-1][toX] = " ";
+			if(b[toY-1][toX] == "J*") b[toY-1][toX] = "j*";
+			else if(b[toY-1][toX] == "j*") b[toY-1][toX] = " ";
+			else if(b[toY-1][toX] == "S*") b[toY-1][toX] = "s*";
+			else if(b[toY-1][toX] == "s*") b[toY-1][toX] = " ";
 		
 			printf("	HiYa!!\n");
 		}
@@ -219,7 +220,7 @@ bool legalMove(std::string player, int fromX, int fromY, int toX, int toY, std::
 
 		//Check if path block horizontal left and right
 		if((fromX-toX) < 0)
-	    	for(int i=fromX+1; i<=toX; i++) if(b[toY][i] != " ") return false;
+			for(int i=fromX+1; i<=toX; i++) if(b[toY][i] != " ") return false;
 		if((fromX-toX) > 0)
 			for(int i=fromX-1; i>=toX; i--) if(b[toY][i] != " ") return false;
 		//Protect index error
@@ -227,10 +228,10 @@ bool legalMove(std::string player, int fromX, int fromY, int toX, int toY, std::
 		
 		//Handle samurai rules	
 		if(mode !="TEST" &&  b[toY+1][toX].length() == 1 && b[toY+1][toX] != " ") {
-            if(b[toY+1][toX] == "J") b[toY+1][toX] = "j";
-            else if(b[toY+1][toX] == "j") b[toY+1][toX] = " ";
-            else if(b[toY+1][toX] == "S") b[toY+1][toX] = "s";
-        	else if(b[toY+1][toX] == "s") b[toY+1][toX] = " ";
+			if(b[toY+1][toX] == "J") b[toY+1][toX] = "j";
+			else if(b[toY+1][toX] == "j") b[toY+1][toX] = " ";
+			else if(b[toY+1][toX] == "S") b[toY+1][toX] = "s";
+			else if(b[toY+1][toX] == "s") b[toY+1][toX] = " ";
 		
 			printf("	HiYa!!\n");
 		}
@@ -244,33 +245,33 @@ bool legalMove(std::string player, int fromX, int fromY, int toX, int toY, std::
 		int j;
 		//Diagonal right up check
 		if(((fromX-toX) < 0) && ((fromY-toY) > 0)){
-        	j = fromY-1;
+			j = fromY-1;
 			for(int i=fromX+1; i<=toX; i++) if(b[j--][i] != " ") return false;
 		}
 		//Diagonal left up check
-	 	if((fromX-toX) > 0 && (fromY-toY > 0)){
+		if((fromX-toX) > 0 && (fromY-toY > 0)){
 			j = fromY-1;
-            for(int i=fromX-1; i>=toX; i--) if(b[j--][i] != " ") return false;
+			for(int i=fromX-1; i>=toX; i--) if(b[j--][i] != " ") return false;
 		}
 		//Diagonal right down check
 		if((fromX-toX) < 0 && (fromY-toY < 0)){
 			j = fromY+1;
-            for(int i=fromX+1; i<=toX; i++) if(b[j++][i] != " ") return false;
-        }
+			for(int i=fromX+1; i<=toX; i++) if(b[j++][i] != " ") return false;
+		}
 		//Diagonal left down check
-	    if((fromX-toX) > 0 && (fromY-toY < 0)){
+		if((fromX-toX) > 0 && (fromY-toY < 0)){
 			j = fromY+1;
-            for(int i=fromX-1; i>=toX; i--) if(b[j++][i] != " ") return false;
-        }
+			for(int i=fromX-1; i>=toX; i--) if(b[j++][i] != " ") return false;
+		}
 		//Protect index error
 		if(toY == 0) return true;
 		
 		//Handle ninja rules
 		if( mode != "TEST" && b[toY-1][toX].length() == 2){
-        	if(b[toY-1][toX] == "J*") b[toY-1][toX] = "j*";
-            else if(b[toY-1][toX] == "j*") b[toY-1][toX] = " ";
-            else if(b[toY-1][toX] == "S*") b[toY-1][toX] = "s*";
-            else if(b[toY-1][toX] == "s*") b[toY-1][toX] = " ";
+			if(b[toY-1][toX] == "J*") b[toY-1][toX] = "j*";
+			else if(b[toY-1][toX] == "j*") b[toY-1][toX] = " ";
+			else if(b[toY-1][toX] == "S*") b[toY-1][toX] = "s*";
+			else if(b[toY-1][toX] == "s*") b[toY-1][toX] = " ";
 			
 			printf("	HiYa!!\n");
 		}
@@ -284,33 +285,33 @@ bool legalMove(std::string player, int fromX, int fromY, int toX, int toY, std::
 		int j;
 		//Diagonal right up check
 		if(((fromX-toX) < 0) && ((fromY-toY) > 0)){
-        	j = fromY-1;
+			j = fromY-1;
 			for(int i=fromX+1; i<=toX; i++) if(b[j--][i] != " ") return false;
 		}
 		//Diagonal left up check
-	 	if((fromX-toX) > 0 && (fromY-toY > 0)){
+		if((fromX-toX) > 0 && (fromY-toY > 0)){
 			j = fromY-1;
-            for(int i=fromX-1; i>=toX; i--) if(b[j--][i] != " ") return false;
+			for(int i=fromX-1; i>=toX; i--) if(b[j--][i] != " ") return false;
 		}
 		//Diagonal right down check
 		if((fromX-toX) < 0 && (fromY-toY < 0)){
 			j = fromY+1;
-            for(int i=fromX+1; i<=toX; i++) if(b[j++][i] != " ") return false;
-        }
+			for(int i=fromX+1; i<=toX; i++) if(b[j++][i] != " ") return false;
+		}
 		//Diagonal left down check
-	    if((fromX-toX) > 0 && (fromY-toY < 0)){
+		if((fromX-toX) > 0 && (fromY-toY < 0)){
 			j = fromY+1;
-            for(int i=fromX-1; i>=toX; i--) if(b[j++][i] != " ") return false;
-        }
+			for(int i=fromX-1; i>=toX; i--) if(b[j++][i] != " ") return false;
+		}
 		//Protect index error
 		if(toY == 7) return true;
 		
 		//Handle ninja rules
 		if(mode!="TEST" && b[toY+1][toX].length() == 1 && b[toY+1][toX] != " "){
-            if(b[toY+1][toX] == "J") b[toY+1][toX] = "j";
-            else if(b[toY+1][toX] == "j") b[toY+1][toX] = " ";
-            else if(b[toY+1][toX] == "S") b[toY+1][toX] = "s";
-        	else if(b[toY+1][toX] == "s") b[toY+1][toX] = " ";
+			if(b[toY+1][toX] == "J") b[toY+1][toX] = "j";
+			else if(b[toY+1][toX] == "j") b[toY+1][toX] = " ";
+			else if(b[toY+1][toX] == "S") b[toY+1][toX] = "s";
+			else if(b[toY+1][toX] == "s") b[toY+1][toX] = " ";
 		
 			printf("	HiYa!!\n");
 		}		
@@ -430,34 +431,34 @@ void makeMove(){
 							moveFound = false;
 							attack = false;
 							if(y-1 != 0 && !found){
-                            	l=y-1;
-                            	for(int k=x+1; k<6; k++) {
+								l=y-1;
+								for(int k=x+1; k<6; k++) {
 									if(l<1) break;
-                               		if(legalMove(player, x, y, k, l, "TEST")) { 
+									if(legalMove(player, x, y, k, l, "TEST")) { 
 										found=true; 
 										//Give prioity to attacks
 										if(isAttack(player, k, l)) {attack=true; cpyX=k; cpyY=l; break;}
 										else if(!moveFound){ moveFound = true; tempX = k; tempY = l;} 	
 									}
-                                	l--;
-                            	}
+									l--;
+								}
 								//if attack no found make first move found
 								if(found && !attack) { cpyX = tempX; cpyY = tempY; }
 							}
 							moveFound = false;
 							attack = false;
 							if(y+1 != 7 && !found) {
-                     	    	l=y+1;
-                        	    for(int k=x-1; k>0; k--) {
+								l=y+1;
+								for(int k=x-1; k>0; k--) {
 									if(l>=7) break;
-                                	if(legalMove(player, x, y, k, l, "TEST")) { 
+									if(legalMove(player, x, y, k, l, "TEST")) { 
 										found=true; 
 										//Give prioity to attacks
 										if(isAttack(player, k, l)) {attack=true; cpyX=k; cpyY=l; break;}
 										else if(!moveFound){ moveFound = true; tempX = k; tempY = l;} 	
 									}
-                            	    l++;
-                            	}
+									l++;
+								}
 								
 								//if attack no found make first move found
 								if(found && !attack) { cpyX = tempX; cpyY = tempY; }
@@ -465,17 +466,17 @@ void makeMove(){
 							moveFound = false;
 							attack = false;
 							if(y-1 != 0 && !found) {
-                            	l=y-1;
-                            	for(int k=x-1; k>0; k--) {
+								l=y-1;
+								for(int k=x-1; k>0; k--) {
 									if(l<0) break;
-                                	if(legalMove(player, x, y, k, l, "TEST")) {
+									if(legalMove(player, x, y, k, l, "TEST")) {
 										found=true; 
 										//Give prioity to attacks
 										if(isAttack(player, k, l)) {attack=true; cpyX=k; cpyY=l; break;}
 										else if(!moveFound){ moveFound = true; tempX = k; tempY = l;} 	
 									}
-                                	l--;
-                           		}
+									l--;
+								}
 								//if attack no found make first move found
 								if(found && !attack) { cpyX = tempX; cpyY = tempY; }
 							}
@@ -507,9 +508,9 @@ void makeMove(){
 		textColor(BRIGHT, WHITE, BLACK);
 		//make move  
 		legalMove("COMP", fromX, fromY, toX, toY, "");
-    	oldPiece = b[fromY][fromX];
-    	b[fromY][fromX] = " ";
-   		b[toY][toX] = oldPiece;
+		oldPiece = b[fromY][fromX];
+		b[fromY][fromX] = " ";
+		b[toY][toX] = oldPiece;
 	}
 }
 
@@ -626,34 +627,34 @@ int mymin(int depth, int maxX, int minN){
 							moveFound = false;
 							attack = false;
 							if(y-1 != 0 && !found){
-                            	l=y-1;
-                            	for(int k=x+1; k<6; k++) {
+								l=y-1;
+								for(int k=x+1; k<6; k++) {
 									if(l<1) break;
-                               		if(legalMove(player, x, y, k, l, "TEST")) { 
+									if(legalMove(player, x, y, k, l, "TEST")) { 
 										found=true; 
 										//Give prioity to attacks
 										if(isAttack(player, k, l)) {attack=true; cpyX=k; cpyY=l; break;}
 										else if(!moveFound){ moveFound = true; tempX = k; tempY = l;} 	
 									}
-                                	l--;
-                            	}
+									l--;
+								}
 								//if attack no found make first move found
 								if(found && !attack) { cpyX = tempX; cpyY = tempY; }
 							}
 							moveFound = false;
 							attack = false;
 							if(y+1 != 7 && !found) {
-                     	    	l=y+1;
-                        	    for(int k=x-1; k>0; k--) {
+								l=y+1;
+								for(int k=x-1; k>0; k--) {
 									if(l>=7) break;
-                                	if(legalMove(player, x, y, k, l, "TEST")) { 
+									if(legalMove(player, x, y, k, l, "TEST")) { 
 										found=true; 
 										//Give prioity to attacks
 										if(isAttack(player, k, l)) {attack=true; cpyX=k; cpyY=l; break;}
 										else if(!moveFound){ moveFound = true; tempX = k; tempY = l;} 	
 									}
-                            	    l++;
-                            	}
+									l++;
+								}
 								
 								//if attack no found make first move found
 								if(found && !attack) { cpyX = tempX; cpyY = tempY; }
@@ -661,17 +662,17 @@ int mymin(int depth, int maxX, int minN){
 							moveFound = false;
 							attack = false;
 							if(y-1 != 0 && !found) {
-                            	l=y-1;
-                            	for(int k=x-1; k>0; k--) {
+								l=y-1;
+								for(int k=x-1; k>0; k--) {
 									if(l<0) break;
-                                	if(legalMove(player, x, y, k, l, "TEST")) {
+									if(legalMove(player, x, y, k, l, "TEST")) {
 										found=true; 
 										//Give prioity to attacks
 										if(isAttack(player, k, l)) {attack=true; cpyX=k; cpyY=l; break;}
 										else if(!moveFound){ moveFound = true; tempX = k; tempY = l;} 	
 									}
-                                	l--;
-                           		}
+									l--;
+								}
 								//if attack no found make first move found
 								if(found && !attack) { cpyX = tempX; cpyY = tempY; }
 							}
@@ -710,9 +711,9 @@ int mymax(int depth, int maxX, int minN){
 	bool found, moveFound, attack;
 	int tempX, tempY;
 	int l=0;
-    
+	
 	if(checkWinner("HUMAN", depth) != -1) return checkWinner("HUMAN", depth);
-    if(depth == maxDepth) return evaluate();
+	if(depth == maxDepth) return evaluate();
 
 	for(int i=0; i<8; i++){
 			for(int j=0; j<7; j++){
@@ -813,34 +814,34 @@ int mymax(int depth, int maxX, int minN){
 							moveFound = false;
 							attack = false;
 							if(y-1 != 0 && !found){
-                            	l=y-1;
-                            	for(int k=x+1; k<6; k++) {
+								l=y-1;
+								for(int k=x+1; k<6; k++) {
 									if(l<1) break;
-                               		if(legalMove(player, x, y, k, l, "TEST")) { 
+									if(legalMove(player, x, y, k, l, "TEST")) { 
 										found=true; 
 										//Give prioity to attacks
 										if(isAttack(player, k, l)) {attack=true; cpyX=k; cpyY=l; break;}
 										else if(!moveFound){ moveFound = true; tempX = k; tempY = l;} 	
 									}
-                                	l--;
-                            	}
+									l--;
+								}
 								//if attack no found make first move found
 								if(found && !attack) { cpyX = tempX; cpyY = tempY; }
 							}
 							moveFound = false;
 							attack = false;
 							if(y+1 != 7 && !found) {
-                     	    	l=y+1;
-                        	    for(int k=x-1; k>0; k--) {
+								l=y+1;
+								for(int k=x-1; k>0; k--) {
 									if(l>=7) break;
-                                	if(legalMove(player, x, y, k, l, "TEST")) { 
+									if(legalMove(player, x, y, k, l, "TEST")) { 
 										found=true; 
 										//Give prioity to attacks
 										if(isAttack(player, k, l)) {attack=true; cpyX=k; cpyY=l; break;}
 										else if(!moveFound){ moveFound = true; tempX = k; tempY = l;} 	
 									}
-                            	    l++;
-                            	}
+									l++;
+								}
 								
 								//if attack no found make first move found
 								if(found && !attack) { cpyX = tempX; cpyY = tempY; }
@@ -848,17 +849,17 @@ int mymax(int depth, int maxX, int minN){
 							moveFound = false;
 							attack = false;
 							if(y-1 != 0 && !found) {
-                            	l=y-1;
-                            	for(int k=x-1; k>0; k--) {
+								l=y-1;
+								for(int k=x-1; k>0; k--) {
 									if(l<0) break;
-                                	if(legalMove(player, x, y, k, l, "TEST")) {
+									if(legalMove(player, x, y, k, l, "TEST")) {
 										found=true; 
 										//Give prioity to attacks
 										if(isAttack(player, k, l)) {attack=true; cpyX=k; cpyY=l; break;}
 										else if(!moveFound){ moveFound = true; tempX = k; tempY = l;} 	
 									}
-                                	l--;
-                           		}
+									l--;
+								}
 								//if attack no found make first move found
 								if(found && !attack) { cpyX = tempX; cpyY = tempY; }
 							}
@@ -1061,17 +1062,17 @@ bool anyMoveLeft(std::string piece, int y, int x, std::string player) {
 			return true;
 		}
 	} else if(piece == "j" || piece == "j*" || piece == "J" || piece == "J*") {		
-        if(y+1 != 8 && x+1 != 7){
-            if(legalMove(player, startX, startY, startX+1, startY+1, "TEST")) lgl++;
+		if(y+1 != 8 && x+1 != 7){
+			if(legalMove(player, startX, startY, startX+1, startY+1, "TEST")) lgl++;
 		}
-        if(y+1 != 8 && x-1 != -1){
-            if(legalMove(player, startX, startY, startX-1, startY+1, "TEST")) lgl++;
+		if(y+1 != 8 && x-1 != -1){
+			if(legalMove(player, startX, startY, startX-1, startY+1, "TEST")) lgl++;
 		}
-        if(y-1 != -1 && x+1 != 7){
-            if(legalMove(player, startX, startY, startX+1, startY-1, "TEST")) lgl++;
+		if(y-1 != -1 && x+1 != 7){
+			if(legalMove(player, startX, startY, startX+1, startY-1, "TEST")) lgl++;
 		}
-        if(y-1 != -1 && x-1 != -1) {
-            if(legalMove(player, startX, startY, startX-1, startY-1, "TEST")) lgl++;
+		if(y-1 != -1 && x-1 != -1) {
+			if(legalMove(player, startX, startY, startX-1, startY-1, "TEST")) lgl++;
 		}
 		
 		if(lgl > 0) {
@@ -1086,11 +1087,11 @@ void getMove(){
 	std::string inp;
 	std::string error;
 	int fromX, fromY, toX, toY;
-    
+	
 	//If legal input pass else prompt again.
-    //Legal inputs: [ (A-G or a-g) in position 1 and 3 ],
-    //			    [ (1-8) in position 2,4 ]
-    //Example: A1B2    
+	//Legal inputs: [ (A-G or a-g) in position 1 and 3 ],
+	//			    [ (1-8) in position 2,4 ]
+	//Example: A1B2    
 	while(1) {
 		textColor(DIM, GREEN, BLACK);
 		cout << "Enter your move: ";
@@ -1111,17 +1112,17 @@ void getMove(){
 			}
 		}
 				
-    	//Convert lower case letters to upper case for board input	
-        if(inp[0] > 90) inp[0] -= 32;
-        if(inp[2] > 90) inp[2] -= 32;
+		//Convert lower case letters to upper case for board input	
+		if(inp[0] > 90) inp[0] -= 32;
+		if(inp[2] > 90) inp[2] -= 32;
 
-        fromX = inp[0]-65;
-        fromY = 8-(inp[1]-'0');
-        toX = inp[2]-65;
-        toY = 8-(inp[3]-'0');
-        if(error == "NONE" && legalMove("HUMAN", fromX, fromY, toX, toY, "")){
-        	break;
-        } else if(error != "INPUT FORMAT"){
+		fromX = inp[0]-65;
+		fromY = 8-(inp[1]-'0');
+		toX = inp[2]-65;
+		toY = 8-(inp[3]-'0');
+		if(error == "NONE" && legalMove("HUMAN", fromX, fromY, toX, toY, "")){
+			break;
+		} else if(error != "INPUT FORMAT"){
 			error = "MOVE";
 		}
 		cout << "	INVALID " << error  << endl;
