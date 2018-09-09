@@ -1,4 +1,4 @@
-# ayih
+# Hiya - (Program Name: "aiyh")
 
 ## Game Description
 This is a chess-like game with a "Karate" theme.  Each side starts with 3 samurai,
@@ -8,8 +8,10 @@ an opponents piece.  When a piece is attacked, it is "demoted".  When a "mini"
 piece is attacked, it is removed from the board.  The king cannot move, and if it
 is attacked, then that side loses. The player will play against my program "ayih".
 
+![alt text](https://github.com/anthonytran2/ayih/blob/master/hiya_picture.PNG)
+
 ## Development
 Ayih was written in C++. I developed this game in my AI class.
 
 ## Run
-Run the exe on Linux.
+Run the executable on Windows or Linux.
