@@ -1,6 +1,6 @@
 # Hiya - (Program Name: "aiyh")
 
-## Game Description
+### Game Description
 This is a chess-like game with a "Karate" theme.  Each side starts with 3 samurai,
 3 ninjas, 3 mini-samurai, 3 mini-ninjas, and a King.  It is played on a 7x8 board,
 and players "attack" opposing pieces by moving one of their pieces in front of
