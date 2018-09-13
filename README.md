@@ -15,3 +15,5 @@ Ayih was written in C++. I developed this game in my AI class.
 
 ## Run
 Run the executable on Windows or Linux.
+
+EXE: https://github.com/anthonytran2/ayih/blob/master/adv_hiya.exe
